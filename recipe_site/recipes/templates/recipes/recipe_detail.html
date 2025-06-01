@@ -1,0 +1,57 @@
+{% extends "recipes/base.html" %}
+{% load static %}
+
+{% block title %}
+{{ recipe.title }}
+{% endblock %}
+
+{% block content %}
+<h1 class="mb-3">{{ recipe.title }}</h1>
+<p><strong>Автор:</strong> {{ recipe.author.username }}</p>
+<p><strong>Время приготовления:</strong> {{ recipe.cooking_time }} минут</p>
+
+{% if recipe.image %}
+  <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}" class="img-fluid my-3">
+{% else %}
+  <img src="{% static 'recipes/no_image.jpg' %}" alt="Нет картинки" class="img-fluid my-3">
+{% endif %}
+
+<h4>Описание</h4>
+<p>{{ recipe.description|linebreaks }}</p>
+
+<h4>Шаги приготовления</h4>
+<p>{{ recipe.steps|linebreaks }}</p>
+
+{% if user == recipe.author %}
+  <a href="{% url 'edit_recipe' recipe.pk %}" class="btn btn-warning">Редактировать</a>
+{% endif %}
+
+<hr class="my-4">
+
+<h3>Комментарии ({{ comments|length }})</h3>
+{% for comment in comments %}
+  <div class="mb-3">
+    <strong>{{ comment.author.username }}</strong> 
+    <small class="text-muted">{{ comment.created_at|date:"d.m.Y H:i" }}</small>
+    <p class="mb-1">{{ comment.text|linebreaks }}</p>
+  </div>
+{% empty %}
+  <p>Нет комментариев</p>
+{% endfor %}
+
+<hr>
+
+{% if user.is_authenticated %}
+  <h4>Оставить комментарий</h4>
+  <form method="post" class="border p-3 bg-white">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Отправить</button>
+  </form>
+{% else %}
+  <p class="text-muted">
+    Чтобы оставить комментарий, <a href="{% url 'login' %}">войдите</a> или 
+    <a href="{% url 'register' %}">зарегистрируйтесь</a>.
+  </p>
+{% endif %}
+{% endblock %}

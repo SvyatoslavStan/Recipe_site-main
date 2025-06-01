@@ -1,0 +1,19 @@
+body {
+    font-family: 'Open Sans', Arial, sans-serif;
+  }
+  
+  .btn-primary {
+    background-color: #4CAF50;
+    border-color: #4CAF50;
+  }
+  
+  .btn-primary:hover {
+    background-color: #45A049;
+    border-color: #45A049;
+  }
+  
+  h1, h2, h3 {
+    font-family: 'Montserrat', sans-serif;
+    letter-spacing: 1px;
+  }
+  

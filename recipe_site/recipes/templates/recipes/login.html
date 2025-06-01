@@ -1,0 +1,16 @@
+{% extends "recipes/base.html" %}
+{% load static %}
+
+{% block title %}
+Вход
+{% endblock %}
+
+{% block content %}
+  <h2>Вход</h2>
+  <form method="post" class="border p-4 bg-white shadow-sm" autocomplete="off">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Войти</button>
+    <a href="{% url 'index' %}" class="btn btn-secondary">Отмена</a>
+  </form>
+{% endblock %}
